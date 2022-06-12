@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "395154066400",
+    "project_id": "kotlinmensseger-60765",
+    "storage_bucket": "kotlinmensseger-60765.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395154066400:android:6d289a53b2293892dd3985",
+        "android_client_info": {
+          "package_name": "com.example.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395154066400-gev7eahbdvs3en7pm98dm42vou6nugbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLu2Q6-oRk3imFwE532OuJbgT2K3tQZAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395154066400-gev7eahbdvs3en7pm98dm42vou6nugbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
