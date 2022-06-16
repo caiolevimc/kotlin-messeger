@@ -8,10 +8,14 @@
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/rounded_edittext_register_login.xml" value="0.1" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/rounded_photoinput.xml" value="0.104" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/rounded_select_photo_register.xml" value="0.104" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_latest_messages.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_login.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_new_message.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/login_activity.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/user_row_new_message.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/menu/nav_menu.xml" value="0.2015625" />
       </map>
     </option>
   </component>

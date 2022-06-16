@@ -1,4 +1,4 @@
-package com.example.messenger
+package com.example.messenger.registerlogin
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -7,20 +7,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_register.*
 
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
+import com.example.messenger.R
+import com.example.messenger.messages.LatestMessagesActivity
+import com.example.messenger.models.User
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     var selectedPhotoUri : Uri? = null
+
+    companion object {
+        val TAG = "Msg RegisterActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +33,13 @@ class RegisterActivity : AppCompatActivity() {
         //funcao para pegar a imagem
         val getImage = registerForActivityResult(ActivityResultContracts.GetContent(),
             ActivityResultCallback {
-                Log.d("Msg RegisterActivity", "Uri: ${it}")
+                Log.d(TAG, "Uri: ${it}")
                 selectedPhotoUri = it.normalizeScheme()
 
                 select_photo_imageview_register.setImageDrawable(it.toDrawable())
                 select_photo_button_register.alpha = 0F
 
-                Log.d("Msg RegisterActivity", "Photo was selected")
+                Log.d(TAG, "Photo was selected")
             })
 
         register_button_register.setOnClickListener {
@@ -43,12 +47,12 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         already_have_account_textview.setOnClickListener{
-            Log.d("Msg RegisterActivity", "Going to LoginActivity")
+            Log.d(TAG, "Going to LoginActivity")
             //going to LoginActivity
             startActivity(Intent(this, LoginActivity::class.java))
         }
         select_photo_button_register.setOnClickListener {
-            Log.d("Msg RegisterActivity", "Try to show photo selector")
+            Log.d(TAG, "Try to show photo selector")
             getImage.launch("image/*")
         }
     }
@@ -57,8 +61,8 @@ class RegisterActivity : AppCompatActivity() {
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
 
-        Log.d("Msg RegisterActivity", "Email is: $email")
-        Log.d("Msg RegisterActivity", "Password: $password")
+        Log.d(TAG, "Email is: $email")
+        Log.d(TAG, "Password: $password")
 
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Please fill the email/password.", Toast.LENGTH_SHORT).show()
@@ -72,20 +76,20 @@ class RegisterActivity : AppCompatActivity() {
                     return@addOnCompleteListener
                 } else {
                     Toast.makeText(this, "Successfully created user", Toast.LENGTH_SHORT).show()
-                    Log.d("Msg RegisterActivity", "Successfully created user with uid: ${it.result.user?.uid}")
+                    Log.d(TAG, "Successfully created user with uid: ${it.result.user?.uid}")
 
                     uploadImageToFirebaseStorage()
                 }
             }
             .addOnFailureListener{
-                Log.d("Msg RegisterActivity", "Failure: ${it.message}")
+                Log.d(TAG, "Failure: ${it.message}")
                 Toast.makeText(this, "Failure: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun uploadImageToFirebaseStorage(){
         if(selectedPhotoUri == null) {
-            Log.d("Msg RegisterActivity", "The uri is null")
+            Log.d(TAG, "The uri is null")
             return
         }
 
@@ -94,17 +98,17 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
-                Log.d("Msg RegisterActivity", "Successfully uploaded image: ${it.metadata?.path}")
+                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
                 ref.downloadUrl
                     .addOnSuccessListener {
-                        Log.d("Msg RegisterActivity", "File Location: $it")
+                        Log.d(TAG, "File Location: $it")
 
                         saveUserToFirebaseDatabase(it.toString())
                     }
             }
             .addOnFailureListener{
-                Log.d("Msg RegisterActivity", "Failed uploading image: ${it.message}")
+                Log.d(TAG, "Failed uploading image: ${it.message}")
             }
     }
 
@@ -120,14 +124,18 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.setValue(user)
             .addOnSuccessListener {
-                Log.d("Msg RegisterActivity", "Finally we saved the user to Firebase Database")
+                Log.d(TAG, "Finally we saved the user to Firebase Database")
+
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
             }
             .addOnFailureListener{
-                Log.d("Msg RegisterActivivty", "Failed to save user: ${it.message}")
+                Log.d(TAG, "Failed to save user: ${it.message}")
             }
     }
 
     private fun Uri.toDrawable(): Drawable = Drawable.createFromStream(contentResolver.openInputStream(this), this.toString())
 }
 
-class User(val uid: String, val username: String, val profileImage: String)
