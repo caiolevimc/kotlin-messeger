@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.messenger.R
 import com.example.messenger.models.User
+import com.example.messenger.views.UserItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -65,16 +66,4 @@ class NewMessageActivity : AppCompatActivity() {
             }
         })
     }
-}
-
-
-class UserItem(val user: User): Item<GroupieViewHolder>(){
-
-    override fun getLayout() = R.layout.user_row_new_message
-
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        Picasso.get().load(user.profileImage).into(viewHolder.itemView.imageview_new_message_row)
-        viewHolder.itemView.username_textview_new_message.text = user.username
-    }
-
 }
