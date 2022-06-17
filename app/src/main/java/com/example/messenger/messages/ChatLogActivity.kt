@@ -6,6 +6,8 @@ import android.util.Log
 import com.example.messenger.R
 import com.example.messenger.models.ChatMessage
 import com.example.messenger.models.User
+import com.example.messenger.views.ChatFromItem
+import com.example.messenger.views.ChatToItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -35,6 +37,7 @@ class ChatLogActivity : AppCompatActivity() {
         recyclerview_chat_log.adapter = adapter
 
         toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+
         if(toUser == null){
             supportActionBar?.title = "Chat Log"
         } else {
@@ -44,33 +47,26 @@ class ChatLogActivity : AppCompatActivity() {
         send_button_chat_log.setOnClickListener {
             Log.d(TAG, "Attempt to send message....")
             performSendMessage()
-            edittext_chat_log.setText("")
         }
 
         listenForMessages()
     }
 
     private fun listenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatMessage = snapshot.getValue(ChatMessage::class.java)
                 if (chatMessage != null) {
-                    if(
-                        chatMessage.fromId == FirebaseAuth.getInstance().uid &&
-                        chatMessage.toId == toUser!!.uid
-                    ){
-                        val currentUser = LatestMessagesActivity.currentUser ?: return
+                    if(chatMessage.fromId == fromId){
+                        val currentUser = LatestMessagesActivity.currentUser ?:return
                         adapter.add(ChatFromItem(chatMessage.text, currentUser))
-
-                    } else if (
-                        chatMessage.fromId == toUser!!.uid &&
-                        chatMessage.toId == FirebaseAuth.getInstance().uid
-                    ){
+                    } else {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
-
                 } else {
                     Log.d(TAG, "chatMessage == null")
                 }
@@ -86,7 +82,7 @@ class ChatLogActivity : AppCompatActivity() {
 
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "Error: ${error.toException().message}")
+
             }
         })
     }
@@ -101,39 +97,24 @@ class ChatLogActivity : AppCompatActivity() {
         if (fromId == null) return;
         if (toId == null) return;
 
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push() //push() cria um id automaticamente
+        //val reference = FirebaseDatabase.getInstance().getReference("/messages").push() //push() cria um id automaticamente
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
         val chatMessage = ChatMessage(reference.key!!, text, fromId, toId, timeStamp)
         reference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d(TAG, "Save our chat message: ${reference.key}")
+                edittext_chat_log.text.clear()
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
             }
             .addOnFailureListener{
                 Log.d(TAG, "Error sending message: ${it.message}")
             }
-    }
-}
 
-class ChatFromItem(val text : String, val user: User) : Item<GroupieViewHolder>(){
-    override fun getLayout() = R.layout.chat_from_row
-
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_from_row.text = text
-        //load profile image
-        val uri = user.profileImage
-        val targetImageView = viewHolder.itemView.imageview_chat_from_row
-        Picasso.get().load(uri).into(targetImageView)
-    }
-}
-
-class ChatToItem(val text : String, val user: User) : Item<GroupieViewHolder>(){
-    override fun getLayout() = R.layout.chat_to_row
-
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_to_row.text = text
-        //load profile image
-        val uri = user.profileImage
-        val targetImageView = viewHolder.itemView.imageview_chat_to_row
-        Picasso.get().load(uri).into(targetImageView)
+        toReference.setValue(chatMessage)
+            .addOnFailureListener{
+                Log.d(TAG, "toReference Error: ${it.message}")
+            }
     }
 }
