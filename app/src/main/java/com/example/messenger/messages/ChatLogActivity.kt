@@ -13,13 +13,8 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieAdapter
-import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_chat_log.*
-import kotlinx.android.synthetic.main.chat_from_row.view.*
-import kotlinx.android.synthetic.main.chat_to_row.view.*
 
 class ChatLogActivity : AppCompatActivity() {
 
@@ -70,6 +65,8 @@ class ChatLogActivity : AppCompatActivity() {
                 } else {
                     Log.d(TAG, "chatMessage == null")
                 }
+
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount - 1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
