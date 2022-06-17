@@ -1,5 +1,6 @@
 package com.example.messenger.messages
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ class NewMessageActivity : AppCompatActivity() {
 
     companion object{
         val TAG = "Msg NewMessageActivity"
+        val USER_KEY = "USER_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +45,13 @@ class NewMessageActivity : AppCompatActivity() {
                 }
 
                 adapter.setOnItemClickListener { item, view ->
+                    val userItem = item as UserItem
 
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    intent.putExtra(USER_KEY, userItem.user)
+                    startActivity(intent)
+
+                    finish()
                 }
 
                 recyclerview_newmessage.adapter = adapter
@@ -55,6 +63,7 @@ class NewMessageActivity : AppCompatActivity() {
         })
     }
 }
+
 
 class UserItem(val user: User): Item<GroupieViewHolder>(){
 

@@ -8,11 +8,15 @@
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/rounded_edittext_register_login.xml" value="0.1" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/rounded_photoinput.xml" value="0.104" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/rounded_select_photo_register.xml" value="0.104" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/drawable/send_button_rounded.xml" value="0.1" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_chat_log.xml" value="0.2" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_latest_messages.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_login.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_new_message.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/chat_from_row.xml" value="0.2015625" />
+        <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/chat_to_row.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/login_activity.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/layout/user_row_new_message.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Caio/AndroidStudioProjects/Messenger/app/src/main/res/menu/nav_menu.xml" value="0.2015625" />

@@ -6,6 +6,10 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+androidExtensions{
+    experimental = true
+}
+
 android {
     compileSdk 32
 
