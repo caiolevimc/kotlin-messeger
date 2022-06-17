@@ -16,7 +16,7 @@
         />
     
     <TextView
-        android:id="@+id/text_chat_from_row"
+        android:id="@+id/textview_from_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="240dp"
