@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.messenger.R
 import com.example.messenger.models.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.*
@@ -40,7 +41,9 @@ class NewMessageActivity : AppCompatActivity() {
                     val user : User? = it.getValue(User::class.java)
 
                     if (user != null) {
-                        adapter.add(UserItem(user))
+                        if(user.uid != FirebaseAuth.getInstance().uid){
+                            adapter.add(UserItem(user))
+                        }
                     }
                 }
 

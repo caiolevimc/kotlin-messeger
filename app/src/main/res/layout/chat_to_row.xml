@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <TextView
@@ -27,7 +27,7 @@
         android:text="This is my message"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="@+id/imageview_chat_to_row"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_chat_to_row"
+        app:layout_constraintStart_toEndOf="@+id/imageview_chat_to_row"
         />
 
 
